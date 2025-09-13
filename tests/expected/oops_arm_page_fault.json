@@ -1,0 +1,40 @@
+{
+  "arch": "arm",
+  "type": "oops",
+  "fault": {
+    "desc": "NULL pointer dereference",
+    "error_code_hex": null,
+    "decode": null,
+    "cr2": null
+  },
+  "taint": "G W",
+  "pc": {
+    "addr": "0xc03e2018",
+    "symbol": "faulting_fn",
+    "offset_hex": "0x8",
+    "system_map_match": true
+  },
+  "call_trace": [
+    {
+      "addr": "0xc03e2018",
+      "symbol": "faulting_fn",
+      "approx": false
+    },
+    {
+      "addr": "0xc0103450",
+      "symbol": "do_work",
+      "approx": true
+    },
+    {
+      "addr": "0xc0103a70",
+      "symbol": "kthread",
+      "approx": true
+    },
+    {
+      "addr": "0xc000f998",
+      "symbol": "ret_from_fork",
+      "approx": true
+    }
+  ],
+  "conclusion": "Likely NULL deref in worker path"
+}

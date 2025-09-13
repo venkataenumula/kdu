@@ -1,1 +1,54 @@
-
+{
+  "arch": "x86_64",
+  "type": "oops",
+  "fault": {
+    "desc": "page fault",
+    "error_code_hex": "0002",
+    "decode": {
+      "present": false,
+      "write": true,
+      "user": false
+    },
+    "cr2": "0x0"
+  },
+  "taint": "P",
+  "pc": {
+    "addr": "0xffffffffa03e1012",
+    "symbol": "my_oops_init",
+    "offset_hex": "0x12",
+    "system_map_match": true
+  },
+  "call_trace": [
+    {
+      "addr": "0xffffffff810a3d49",
+      "symbol": "do_one_initcall",
+      "approx": true
+    },
+    {
+      "addr": "0xffffffff8111a78d",
+      "symbol": "do_init_module",
+      "approx": true
+    },
+    {
+      "addr": "0xffffffff8111aa01",
+      "symbol": "load_module",
+      "approx": true
+    },
+    {
+      "addr": "0xffffffff8108f3c1",
+      "symbol": "__x64_sys_init_module",
+      "approx": true
+    },
+    {
+      "addr": "0xffffffff8100236b",
+      "symbol": "do_syscall_64",
+      "approx": true
+    },
+    {
+      "addr": "0xffffffff81c0009c",
+      "symbol": "entry_SYSCALL_64_after_hwframe",
+      "approx": true
+    }
+  ],
+  "conclusion": "Likely NULL pointer dereference during module init"
+}

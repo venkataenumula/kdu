@@ -92,3 +92,9 @@ kdu analyze       --log tests/data/oops_x86_null_deref.log       --system-map te
 
 diff -u tests/expected/oops_x86_null_deref.json /tmp/out.json
 ```
+## Unit test using cargo test
+```bash
+cargo test -- --nocapture
+or
+KDU_BIN=kdu-cli cargo test
+```

@@ -40,3 +40,55 @@ Rust-based crash-dump/Oops analyzer you can actually build and run.  Kernel Debu
 
         Make sure vmlinux matches the exact running kernel build/config, same as the System.map matching rule emphasized in the guide (addresses change per build/config).
         For distro kernels, install matching debuginfo to get DWARF for vmlinux
+
+
+# kdu Test Fixtures
+
+This folder contains **sample logs** and **golden expected outputs** to exercise the Rust-based Kernel Debug Utility (kdu).  
+Use these to write unit/integration tests without relying on a live kernel.
+
+## Structure
+- `tests/data/` — input fixtures (Oops/Panic logs and mock System.map files)
+- `tests/expected/` — golden outputs (JSON or Markdown) that the renderer should produce
+
+## Included Cases
+1. **x86_64 NULL dereference**  
+   - Input: `tests/data/oops_x86_null_deref.log`  
+   - Symbols: `tests/data/System.map-5.15.mock`  
+   - Expected: `tests/expected/oops_x86_null_deref.json`  
+   - Notes: Fault code `0002` ⇒ present=0, write=1, user=0. PC should resolve to `my_oops_init+0x12`.
+
+2. **ARMv7 worker NULL deref**  
+   - Input: `tests/data/oops_arm_page_fault.log`  
+   - Symbols: `tests/data/System.map-armv7.mock`  
+   - Expected: `tests/expected/oops_arm_page_fault.json`  
+   - Notes: `PC is at faulting_fn+0x8`. No x86-style `CR2`/error bits.
+
+3. **x86_64 proprietary taint**  
+   - Input: `tests/data/oops_x86_taint_prop.log`  
+   - Symbols: `tests/data/System.map-6.1.mock`  
+   - Expected: `tests/expected/oops_x86_taint_prop.md`  
+   - Notes: Verifies taint parsing and Markdown rendering.
+
+## Suggested Rust Tests (pseudo)
+```rust
+// crates/kdu-parsers/tests/oops_x86.rs
+#[test]
+fn parse_x86_null_deref() {
+    let log = std::fs::read_to_string("tests/data/oops_x86_null_deref.log").unwrap();
+    let smap = kdu_sym::SystemMap::load("tests/data/System.map-5.15.mock").unwrap();
+    let rec = kdu_parsers::parse_oops(&log).unwrap();
+    let (sym, off) = smap.resolve(rec.pc_addr).unwrap();
+    assert_eq!(sym.name, "my_oops_init");
+    assert_eq!(off, 0x12);
+    let fault = kdu_taint::fault::decode_pf(0x0002);
+    assert_eq!((fault.present, fault.write, fault.user), (false,true,false));
+}
+```
+
+## Running your tool against fixtures
+```bash
+kdu analyze       --log tests/data/oops_x86_null_deref.log       --system-map tests/data/System.map-5.15.mock       --format json > /tmp/out.json
+
+diff -u tests/expected/oops_x86_null_deref.json /tmp/out.json
+```

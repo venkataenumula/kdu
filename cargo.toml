@@ -1,0 +1,4 @@
+#Workspace Cargo.toml:
+[workspace]
+members = ["crates/kdu-cli","crates/kdu-core","crates/kdu-parsers","crates/kdu-sym","crates/kdu-report","crates/kdu-taint"]
+resolver = "2"

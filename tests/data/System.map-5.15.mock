@@ -1,0 +1,7 @@
+ffffffffa03e1000 T my_oops_init
+ffffffff810a3cf0 T do_one_initcall
+ffffffff8111a730 T do_init_module
+ffffffff81118a00 T load_module
+ffffffff8108f270 T __x64_sys_init_module
+ffffffff81002330 T do_syscall_64
+ffffffff81c00058 T entry_SYSCALL_64_after_hwframe

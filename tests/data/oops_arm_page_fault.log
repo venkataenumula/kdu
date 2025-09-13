@@ -1,0 +1,19 @@
+Unable to handle kernel NULL pointer dereference at virtual address 00000000
+pgd = c0004000
+[00000000] *pgd=00000000
+Internal error: Oops: 5 [#1] PREEMPT ARM
+CPU: 0    PID: 1234   Comm: kworker/0:1  Tainted: G        W    4.19.0-kdu #1
+PC is at faulting_fn+0x8/0x24
+LR is at do_work+0x30/0x9c
+pc : [<c03e2018>]    lr : [<c0103450>]    psr: 20000013
+sp : c1a01e90  ip : 00000000  fp : c1a01ea4
+r10: 00000000  r9 : 00000000  r8 : 00000000
+r7 : 00000000  r6 : 00000000  r5 : 00000000  r4 : 00000000
+r3 : 00000000  r2 : 00000000  r1 : 00000000  r0 : 00000000
+Process kworker/0:1 (pid: 1234, stack limit = 0x(ptr))
+Call trace:
+ [<c03e2018>] faulting_fn+0x8/0x24
+ [<c0103450>] do_work+0x30/0x9c
+ [<c0103a70>] kthread+0x110/0x13c
+ [<c000f998>] ret_from_fork+0x14/0x24
+Code: e3a03000 e5833000 e3a00000 e5800000 (e5800000)

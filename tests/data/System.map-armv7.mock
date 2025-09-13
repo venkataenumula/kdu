@@ -1,0 +1,4 @@
+c03e2010 T faulting_fn
+c0103420 T do_work
+c0103960 T kthread
+c000f984 T ret_from_fork

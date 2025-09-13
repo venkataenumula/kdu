@@ -1,0 +1,7 @@
+general protection fault: 0000 [#1] SMP
+CPU: 2 PID: 4321 Comm: mypropdrv Tainted: P  OE     6.1.0-kdu #3
+RIP: 0010:[<ffffffffa07b900a>]  [<ffffffffa07b900a>] prop_handle+0x3a/0x60 [propdrv]
+RSP: 0018:ffffb123c0f3fd98  EFLAGS: 00010202
+Call Trace:
+ [<ffffffff810a3cf0>] do_one_initcall+0x50/0x1b0
+Code: 90 90 90 90 48 8b 07 ff 10 48 8b 0f ff 11 <48> 8b 17 ff 12 c3

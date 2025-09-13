@@ -35,3 +35,8 @@ Rust-based crash-dump/Oops analyzer you can actually build and run.  Kernel Debu
            Decode page-fault error bits (present/protection, read/write, user/kernel), and taint flags (e.g., P proprietary module, F forced, S SMP mismatch, etc.),
         5. Render report
            TTY summary + optional Markdown/JSON—including a “Likely root cause” section (e.g., NULL deref at *(int*)0 style patterns), with the exact function/line and call-trace mapping.
+
+# Dev tips
+
+        Make sure vmlinux matches the exact running kernel build/config, same as the System.map matching rule emphasized in the guide (addresses change per build/config).
+        For distro kernels, install matching debuginfo to get DWARF for vmlinux
